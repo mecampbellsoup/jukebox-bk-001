@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'pry'
 
 describe 'Jukebox' do
   let(:songs) {
@@ -43,11 +44,11 @@ describe 'Jukebox' do
     ]
   }
 
-  let(:jukebox) { Jukebox.new(songs) }
+  let(:jukebox)    { Jukebox.new(songs) }
 
   describe '#new' do
     it 'accepts a list of songs on initialization' do
-      expect{Jukebox.new(songs)}.to_not raise_error
+      expect{ jukebox }.to_not raise_error
     end
 
     it 'assigns the list of songs to an instance variable' do
@@ -83,10 +84,9 @@ describe 'Jukebox' do
 
   describe '#play' do
     context 'with no arguments' do
-      it 'asks the user what song they\'d like to play' do
-        jukebox.stub(:gets).and_return("1")
+      it 'displays an error and asks the user what song they\'d like to play' do
         play_no_args_output = capture_stdout { jukebox.play }
-        expect(play_no_args_output).to match(/Now Playing: Phoenix - 1901/)
+        expect(play_no_args_output).to match(/what song would you like to play?/i)
       end
     end
 
